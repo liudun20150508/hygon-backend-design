@@ -1,0 +1,67 @@
+# 坑知识库 — AI 副驾能力 #2: 坑规避 (个人踩坑 → 团队资产)
+# 结构: symptom(报错特征) -> diagnosis(根因) -> fix(修复模板) -> verify(验证)
+# 新增坑: 工程师确认新坑后, 直接追加一条, 全组免疫
+
+- id: PIT-001
+  title: SKY130 库 63 个 DFF/latch 单元缺 IQ 引脚声明 → OpenROAD 段错误
+  stage: read_liberty
+  symptom:
+    - "Signal 11 received"
+    - "makePortFuncs"
+    - "function references unknown port IQ"
+  diagnosis: >
+    sky130_fd_sc_hd__tt_025C_1v80.lib 中 dfxtp/dfrtp/sdfxtp 等 63 个 DFF/latch 单元,
+    pin(Q/Q_N) 的 function 引用内部节点 IQ/IQ_N, 但单元内未声明该引脚。
+    OpenROAD 内置 OpenSTA 解析到 makePortFuncs 时直接段错误。
+  fix: |
+    patch_lib.py: 按 cell 块扫描, function 引用的端口未声明时,
+    插入 "pin(IQ) { direction : internal; }" 声明 (插入点必须在行首 pin/pg_pin 声明前)。
+    生成补丁库, 原始 PDK 库保持不动。注意: yosys/abc 读原库没问题, 补丁库只给 OpenROAD。
+  verify: read_liberty 通过, 无 Signal 11
+  keywords: [sky130, liberty, segfault, signal11, iq, opensta, openroad]
+
+- id: PIT-002
+  title: OpenROAD 网表解析不支持 signed 声明/字面量
+  stage: read_verilog
+  symptom:
+    - "syntax error"
+    - "STA-0171"
+  diagnosis: >
+    yosys 门级网表含 "wire signed [31:0]" 声明 (sv2v 循环变量转换而来) 和
+    有符号字面量 32'sd128, OpenROAD 内置 Verilog 解析器不支持。
+  fix: |
+    clean_netlist.py:
+      wire signed  -> wire
+      (\d+)'s([dhbo]) -> \1'\2  (去有符号字面量)
+      黑盒 RAM 参数 #(...) 展平 + 行为体移除 + 端口宽度参数替换为数值
+  verify: read_verilog 通过, 无 STA-0171
+  keywords: [signed, syntax, verilog, netlist, openroad, sta-0171]
+
+- id: PIT-003
+  title: 网表单元库与后端工艺不匹配 (45nm 网表跑 SKY130 后端)
+  stage: link_design
+  symptom:
+    - "module .*_X1 not found"
+    - "Creating black box"
+    - "LEF master .* not found"
+  diagnosis: >
+    综合用的 Nangate45 库 (DFF_X1/BUF_X1/OAI222_X1), OpenROAD 后端读 SKY130 LEF,
+    link_design 找不到 Nangate 单元。必须用目标工艺库重新综合。
+  fix: |
+    02_synth_sky130.sh: yosys + sky130_fd_sc_hd lib 重综合
+    (abc -D <period>), 黑盒 RAM 定义照旧追加。
+  verify: link_design 无 master not found, DEF 单元名全部 sky130_fd_sc_hd__*
+  keywords: [nangate, sky130, link_design, master, not found, blackbox, ord-2013]
+
+- id: PIT-004
+  title: yosys/abc 解析补丁库失败 (Table cannot be found)
+  stage: synth_abc
+  symptom:
+    - "Table cannot be found"
+    - "Can't open ABC output file"
+  diagnosis: >
+    给 OpenROAD 打的极简 pin(IQ) 补丁 (无电容/无时序表) 导致 abc 的 liberty 读取器
+    找不到时序表。abc 对原始库无此问题。
+  fix: 综合用原始库, 补丁库只给 OpenROAD 用 (两库分离)
+  verify: abc 正常输出 mapped 网表
+  keywords: [abc, yosys, table, liberty, patch]

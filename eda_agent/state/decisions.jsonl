@@ -1,0 +1,9 @@
+{"ts": "2026-08-19 13:55:39", "event": "run_start", "workspace": "build/vortex_base", "metrics_baseline": {"worst_slack_max": -76.09, "wns_max": -76.09, "tns_max": -1121127.75, "worst_slack_min": 0.04, "cell_area_um2": 1239347.466, "seq_area_um2": 482574.274, "seq_ratio_pct": 38.94}}
+{"ts": "2026-08-19 13:55:39", "event": "stage", "stage": "01_floorplan", "exit": 0, "time_s": 0, "pitfalls_hit": [], "metrics_after": {"worst_slack_max": -76.09, "wns_max": -76.09, "tns_max": -1121127.75, "worst_slack_min": 0.04, "cell_area_um2": 1239347.466, "seq_area_um2": 482574.274, "seq_ratio_pct": 38.94}, "log_tail": "(dry-run)"}
+{"ts": "2026-08-19 13:55:39", "event": "stage", "stage": "02_place", "exit": 0, "time_s": 0, "pitfalls_hit": [], "metrics_after": {"worst_slack_max": -76.09, "wns_max": -76.09, "tns_max": -1121127.75, "worst_slack_min": 0.04, "cell_area_um2": 1239347.466, "seq_area_um2": 482574.274, "seq_ratio_pct": 38.94}, "log_tail": "(dry-run)"}
+{"ts": "2026-08-20 08:07:40", "event": "stage", "flow": "vortex_llm", "stage": "00_synth", "exit": 0, "time_s": 0.0, "log_tail": "(dry-run)"}
+{"ts": "2026-08-20 08:07:40", "event": "stage", "flow": "vortex_llm", "stage": "01_floorplan", "exit": 0, "time_s": 0.0, "log_tail": "(dry-run)"}
+{"ts": "2026-08-20 08:07:40", "event": "stage", "flow": "vortex_llm", "stage": "02_place", "exit": 0, "time_s": 0.0, "log_tail": "(dry-run)"}
+{"ts": "2026-08-20 08:07:40", "event": "stage", "flow": "vortex_llm", "stage": "03_cts", "exit": 0, "time_s": 0.0, "log_tail": "(dry-run)"}
+{"ts": "2026-08-20 08:07:40", "event": "stage", "flow": "vortex_llm", "stage": "04_route", "exit": 0, "time_s": 0.0, "log_tail": "(dry-run)"}
+{"ts": "2026-08-20 08:07:40", "event": "stage", "flow": "vortex_llm", "stage": "05_sta", "exit": 0, "time_s": 0.0, "log_tail": "(dry-run)"}

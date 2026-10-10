@@ -1,0 +1,3 @@
+# 第三方开源代码与生成的数据文件：保持上游原样，不做空白错误检查
+cpu_backend/picorv32/** -whitespace
+cpu_backend/reports/** -whitespace

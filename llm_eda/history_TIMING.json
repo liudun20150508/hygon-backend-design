@@ -1,0 +1,13 @@
+[
+  {
+    "iteration": 1,
+    "stage": "TIMING",
+    "returncode": 0,
+    "metrics": {},
+    "diagnosis": "规则库命中: ('worst slack', 'wns', '-')",
+    "fixes_applied": [
+      "flow/fixes/TIMING_fix.txt"
+    ],
+    "risk": "规则库修复, 建议用真实 LLM 复核"
+  }
+]

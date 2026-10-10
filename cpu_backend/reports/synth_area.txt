@@ -1,0 +1,31 @@
+
+7. Printing statistics.
+
+=== picorv32 ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+    33709        - wires
+    36159        - wire bits
+      180        - public wires
+     2305        - public wire bits
+       27        - ports
+      409        - port bits
+     9597 9.83E+04 cells
+     1601    1E+04   sky130_fd_sc_hd__and2_1
+      250   1876.8   sky130_fd_sc_hd__and2b_1
+      317 6.35E+03   sky130_fd_sc_hd__dfxtp_1
+     1248 3.75E+04   sky130_fd_sc_hd__edfxtp_1
+       27  101.347   sky130_fd_sc_hd__inv_1
+     1765 1.99E+04   sky130_fd_sc_hd__mux2_1
+     2382 8.94E+03   sky130_fd_sc_hd__nand2_1
+      247  927.139   sky130_fd_sc_hd__nor2_1
+      703  4.4E+03   sky130_fd_sc_hd__or2_1
+      723 5.43E+03   sky130_fd_sc_hd__or2b_1
+      116 1.02E+03   sky130_fd_sc_hd__xnor2_1
+      218 1.91E+03   sky130_fd_sc_hd__xor2_1
+
+   Chip area for module '\picorv32': 98310.537600
+     of which used for sequential elements: 43822.028800 (44.58%)
+
